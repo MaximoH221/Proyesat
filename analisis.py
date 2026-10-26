@@ -1,3 +1,5 @@
+ 
+
 class Satelite:
 
     def __init__(self, nombre, latitud, longitud, altitud_km):
@@ -50,3 +52,5 @@ def ordenar_por(satelites, atributo, descendente=False):
     """ función genérica que devuelve una lista nueva ordenada por cualquier atributo
     ("altitud_km", "latitud", "nombre", ...). """
     return sorted(satelites, key=lambda sat: getattr(sat, atributo), reverse= descendente)
+
+def top_n(satelites, n, mas_altos=True):
