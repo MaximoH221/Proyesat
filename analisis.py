@@ -1,15 +1,6 @@
- 
+from catalogo import grupos
+from satelite import Satelite
 
-class Satelite:
-
-    def __init__(self, nombre, latitud, longitud, altitud_km):
-        self.nombre = nombre
-        self.latitud = latitud
-        self.longitud = longitud
-        self.altitud_km = altitud_km
-
-    def tipo_orbita(self): # Despues exporto desde funciones
-        return "LEO"  # Valor temporal de prueba
 
 def contar_por_tipo(satelites):
     """devuelve un diccionario {"LEO": n, "MEO": n, "GEO": n, "HEO": n},
@@ -54,3 +45,41 @@ def ordenar_por(satelites, atributo, descendente=False):
     return sorted(satelites, key=lambda sat: getattr(sat, atributo), reverse= descendente)
 
 def top_n(satelites, n, mas_altos=True):
+    """devuelve los n satélites más altos
+    (o más bajos), reutilizando ordenar_por"""
+
+    mi_lista = ordenar_por(satelites, "altitud_km", descendente=mas_altos)
+    return mi_lista[:n]
+
+
+def resumen_por_grupo(satelites):
+    """Usando grupo de catalogo.py, devuelve un diccionario 
+    con un resumen de las altitudes de cada grupo."""
+    
+    mi_dicc = {}
+    
+    for sat in satelites:
+        prefijo = sat.nombre.split('-')[0].upper()
+        nombre_grupo = grupos.get(prefijo, "Otros")
+        
+        if nombre_grupo not in mi_dicc:
+            mi_dicc[nombre_grupo] = [sat.altitud_km]
+        else:
+            mi_dicc[nombre_grupo].append(sat.altitud_km)
+            
+    resumen_final = {}
+    
+    for grupo, lista_altitudes in mi_dicc.items():
+        cantidad = len(lista_altitudes)
+        minima = min(lista_altitudes)
+        maxima = max(lista_altitudes)
+        media = sum(lista_altitudes) / cantidad
+        
+        resumen_final[grupo] = {
+            "cantidad": cantidad,
+            "minima": round(minima, 2), # Redondeado a 2 decimales por prolijidad
+            "media": round(media, 2),
+            "maxima": round(maxima, 2)
+        }
+        
+    return resumen_final
