@@ -34,14 +34,14 @@ def anio_lanzamiento(registro: dict) -> int:
     return int(anio)
 
 
-def grupo(registro: dict) -> str:
+def grupo(nombre: str) -> str:
     """
     Identifica y devuelve el grupo al que pertenece el satelite
     segun el prefijo de su nombre OBJECT_NAME, si no es de 
     niguno conocidos devuelve otros
     """
 
-    nombre= registro["OBJECT_NAME"]
+    # nombre= registro["OBJECT_NAME"]
     if len(nombre) < 1: 
         print("Error: OBJECT_NAME no tiene el formato correcto")
     for prefijo, grupete in grupos.items():
@@ -57,7 +57,7 @@ def contar_por_grupo(registro):
     """
     cantidad={}
     for register in registro:   
-        grupete= grupo(register)
+        grupete = grupo(register["OBJECT_NAME"])
         if grupete not in cantidad:
             cantidad[grupete]=0
         cantidad[grupete]+= 1
