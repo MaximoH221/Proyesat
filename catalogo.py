@@ -10,6 +10,10 @@ grupos= {
         "BEIDOU": "BeiDou"
 }
 def leer_satelites(ruta):
+    """
+    Lee el archivo json y devuelve una lista de diccionario.
+    Si no se encuentra el archivo, salta un error y imprime una lista vacia
+    """
     try: 
         with open(ruta, "r", encoding="utf-8") as archivo:
             registros = json.load(archivo)
@@ -19,6 +23,10 @@ def leer_satelites(ruta):
     return registros
 
 def anio_lanzamiento(registro: dict) -> int:
+    """
+    Extrae y devuelve el año de lanzamiento de un satelite según
+    los primeros 4 digitos de OBJECT_ID
+    """
     ob_id= registro["OBJECT_ID"]
     if len(ob_id) < 4:
         print("Error: OBJECT_ID no tiene el formato esperado")
@@ -27,6 +35,12 @@ def anio_lanzamiento(registro: dict) -> int:
 
 
 def grupo(registro: dict) -> str:
+    """
+    Identifica y devuelve el grupo al que pertenece el satelite
+    segun el prefijo de su nombre OBJECT_NAME, si no es de 
+    niguno conocidos devuelve otros
+    """
+
     nombre= registro["OBJECT_NAME"]
     if len(nombre) < 1: 
         print("Error: OBJECT_NAME no tiene el formato correcto")
@@ -34,17 +48,13 @@ def grupo(registro: dict) -> str:
         if nombre.startswith(prefijo):
             return grupete
     return "Otros"
-def nombre_satelite(registro: dict) -> dict:
-    diccio= {}
-    for register in registro: 
-        nombres= register["OBJECT_NAME"]
-        grupete = grupo(register)
-        if grupete not in diccio: 
-            diccio[grupete]= []
-        diccio[grupete].append(nombres)
-    return diccio
+
 
 def contar_por_grupo(registro):
+    """
+    Recibe la lista de registros que da leer_satelites y devuelve
+    la cantidad total de satelites por cada grupo 
+    """
     cantidad={}
     for register in registro:   
         grupete= grupo(register)
@@ -54,6 +64,12 @@ def contar_por_grupo(registro):
     return cantidad 
 
 def lanzamientos_por_anio(registro):
+    """
+    Recibe una lista de registros de satelites y devuelve un
+    diccionario con la cantidad de lanzamientos registrados 
+    cada año
+    """
+    
     lanzamientos= {}
     for lanzamiento in registro:
         años= anio_lanzamiento(lanzamiento)

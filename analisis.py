@@ -83,3 +83,40 @@ def resumen_por_grupo(satelites):
         }
         
     return resumen_final
+
+def lanzamientos_desde_2015(satelites):
+    """
+    Devuelve un diccionario con los lanzamientos por año (desde 2015)
+    de los satélites que están activos.
+    """
+    lanzamientos= {}
+    for sat in satelites:
+        if sat.anio >= 2015:
+            if sat.anio not in lanzamientos:
+                lanzamientos[sat.anio] = 0
+            lanzamientos[sat.anio] += 1
+    return lanzamientos 
+def resumen_altitudes_por_grupo(satelites):
+    """
+    Calcula un resumen (cantidad, altitud mínima, máxima y promedio) 
+    para cada tipo de órbita de los satélites activos.
+    """
+    resumen = {}
+    for sat in satelites:
+        tipo = sat.tipo_orbita()
+        if tipo not in resumen:
+            resumen[tipo] = {"altitudes": [], "cantidad": 0}
+        resumen[tipo]["altitudes"].append(sat.altitud_km)
+        resumen[tipo]["cantidad"] += 1
+    
+    # Procesamos los datos finales para cada grupo
+    resultado_final = {}
+    for tipo, datos in resumen.items():
+        alts = datos["altitudes"]
+        resultado_final[tipo] = {
+            "Cantidad": datos["cantidad"],
+            "Altitud Mínima (km)": round(min(alts), 2),
+            "Altitud Máxima (km)": round(max(alts), 2),
+            "Altitud Promedio (km)": round(sum(alts) / len(alts), 2)
+        }
+    return resultado_final
