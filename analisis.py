@@ -1,7 +1,4 @@
 from catalogo import grupo
-from satelite import Satelite
-
-
 
 def contar_por_tipo(satelites):
     """devuelve un diccionario {"LEO": n, "MEO": n, "GEO": n, "HEO": n},
@@ -77,11 +74,10 @@ def resumen_por_grupo(satelites):
         media = sum(lista_altitudes) / cantidad
         
         resumen_final[nom_grupo] = {
-            "Cantidad": cantidad,
-            "Altitud Mínima (km)": round(minima, 2), # Redondeado a 2 decimales por prolijidad
-            "Altitud Promedio (km)": round(media, 2),
-            "Altitud Máxima (km)": round(maxima, 2)
+            "cantidad": cantidad,
+            "min": round(minima, 2), # Redondeado a 2 decimales por prolijidad
+            "promedio": round(media, 2),
+            "max": round(maxima, 2)
         }
         
     return resumen_final
-

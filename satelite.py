@@ -1,7 +1,7 @@
 from funciones_base import obtener_posicion, crear_objeto_skyfield
 from catalogo import anio_lanzamiento
 class Satelite:
-    def __init__(self, nombre, latitud, longitud, altitud_km, anio):
+    def __init__(self, nombre, latitud, longitud, altitud_km, anio=None):
         """Guarda los cuatro datos como atributos del objeto."""
         self.nombre= nombre
         self.latitud= latitud
@@ -25,7 +25,7 @@ class Satelite:
     def __str__(self):
         """Por ejemplo: 'ISS (ZARYA) | LEO | 419.7 km'"""
         tipo= self.tipo_orbita()
-        return f"{self.nombre} | {tipo} | {self.altitud_km} km"
+        return f"{self.nombre} | {tipo} | {self.altitud_km:.1f} km"
 
 def crear_satelites(registros, momento):
     """

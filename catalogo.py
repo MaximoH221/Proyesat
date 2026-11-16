@@ -83,6 +83,7 @@ if __name__ == "__main__":
     archivo= "datos/satelites.json"
     registros= leer_satelites(archivo)
     
+    
     if registros:
         if isinstance(registros, list):
             satelite1= registros[0]
