@@ -20,8 +20,9 @@ def leer_satelites(ruta):
     except FileNotFoundError:
         print(f"Error: No se encontró el archivo {ruta}")
         return []
+  
     return registros
-
+    
 def anio_lanzamiento(registro: dict) -> int:
     """
     Extrae y devuelve el año de lanzamiento de un satelite según
@@ -83,7 +84,7 @@ if __name__ == "__main__":
     archivo= "datos/satelites.json"
     registros= leer_satelites(archivo)
     
-    
+    print((registros))
     if registros:
         if isinstance(registros, list):
             satelite1= registros[0]
@@ -91,7 +92,7 @@ if __name__ == "__main__":
             satelite1= list(registros.values())[0]
         anio= anio_lanzamiento(satelite1)
         print(f"El primer satelite se lanzo en el año {anio}")
-        g= grupo(satelite1)
+        g= grupo(satelite1["OBJECT_NAME"])
         print(f"El primer satelite pertenece al grupo {g}")
         conteo= contar_por_grupo(registros)
         print("Resumen de contar por grupo")
